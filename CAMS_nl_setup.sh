@@ -1,68 +1,84 @@
 #!/bin/bash
 
+#########FIFTH SCRIPT OF WORKFLOW#########
 
-#########SIXTH SCRIPT#########
+#########################################
+#     !!!run must start at 00 UTC!!!
+#########################################
 
-# ****** run must start at 00 UTC *********
-
-# create int2lm namelist for period 1-4
+#### create int2lm namelist for period####
 
 
 period=$1
 
+# aerosol switch for nl, default = 4
 itype_aerosol=4
 
-
+# working directory
 inidir=/scratch/juckerj/sandbox/lm_ifs2lm_c2e_${period}
 
-cd ${inidir}
 
-echo move to ${inidir}
 
-# period1
+###########define periods###############
+
+# period1 (13.-20.2 2019)
 if [ $period = period1 ];
 then
     year=2019
+    yy=19
     month=02
     days=(13 14 15 16 17 18 19 20)
 fi
 
-# period2
+# period2 (23.-29.2 2019)
 if [ $period = period2 ];
 then
     year=2019
+    yy=19
     month=06
     days=(23 24 25 26 27 28 29)
 fi
 
-# period3
+# period3 (1.-7.12 2018)
 if [ $period = period3 ];
 then    
     year=2018
+    yy=18
     month=12
     days=(01 02 03 04 05 06 07)
 fi
 
-# period4
+# period4 (6.-13.6. 2018)
 if [ $period = period4 ];
 then    
     year=2018
+    yy=18
     month=06
     days=(06 07 08 09 10 11 12)
 fi
 
+####go to working directory####
+
+cd ${inidir}
+
+echo '####'move to ${inidir}'####'
+
+###### iterate over all days of period#####
 for day in ${days[@]};
 do
     DATE=${year}${month}${day}00
-
+    
+    # IN/Output directory of int2lm
     CAMS_in=${inidir}/CAMS_in/CAMS_in_${DATE}
     CAMS_out=${inidir}/CAMS_out/CAMS_out_${DATE}
-
+    
+    # copy external parameter
     cp ${inidir}/met/ext ${CAMS_in}/.
 
+    # go to working directory
     cd ${inidir}/work/work_${DATE}
 
-    
+    # write namelist INPUT
     cat > INPUT << end_input
       &CONTRL
         lmixcld=.TRUE.,

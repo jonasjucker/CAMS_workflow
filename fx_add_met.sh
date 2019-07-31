@@ -1,14 +1,15 @@
-!/bin/bash
+#!/bin/bash
 
-#########FOURTH SCRIPT#########
+#########FORTH SCRIPT OF WORKFLOW#########
 
-# add dummy meteorology to CAMS fields
-# in order to run int2lm
+#########################################
+#     !!!run must start at 00 UTC!!!
+#########################################
 
 
 function create_nl {
     
-    # creates fieldextra namelist for each timestep at DATE
+    ###create fx nl for each timestep at DATE###
     
     DATE=$1
     step=$2
@@ -113,7 +114,8 @@ end_nl
 
 function cat_fields {
     
-    # cat tmp-fields of dummy met and aer-species into CAMS_in directory  
+    ###cat tmp-fields of dummy meteorology and ###
+    ###aer-species into CAMS_in directory ### 
 
     DATE=$1
     step=$2
@@ -124,50 +126,65 @@ function cat_fields {
 }
 
 
-# ****** START SCRIPT *********
+###########START SCRIPT############
 
 period=$1
 
+# working directory
 inidir=/scratch/juckerj/sandbox/lm_ifs2lm_c2e_${period}
-cd ${inidir}
-echo move to ${inidir}
 
-# period1
+
+###########define periods###############
+
+# period1 (13.-20.2 2019)
 if [ $period = period1 ];
 then
     year=2019
+    yy=19
     month=02
     days=(13 14 15 16 17 18 19 20)
 fi
 
-# period2
+# period2 (23.-29.2 2019)
 if [ $period = period2 ];
 then
     year=2019
+    yy=19
     month=06
     days=(23 24 25 26 27 28 29)
 fi
 
-# period3
+# period3 (1.-7.12 2018)
 if [ $period = period3 ];
 then    
     year=2018
+    yy=18
     month=12
     days=(01 02 03 04 05 06 07)
 fi
 
-# period4
+# period4 (6.-13.6. 2018)
 if [ $period = period4 ];
 then    
     year=2018
+    yy=18
     month=06
     days=(06 07 08 09 10 11 12)
 fi
 
+####go to working directory####
+
+cd ${inidir}
+
+echo '####'move to ${inidir}'####'
+
+###### iterate over all days of period#####
+
 for day in ${days[@]};
 do
     DATE=${year}${month}${day}00
-
+    
+    ### loop over leadtime ###
     for step in `seq 0 3 80`; do
         day=`echo $step/24 | bc`
         hour=`echo $step-$day*24 | bc`
@@ -185,14 +202,17 @@ do
 
         fi
         
+        # create_nl for step
         create_nl $DATE $step $name $period
         
         sleep 1
-
+        
+        # execute fx
         /scratch/juckerj/sandbox/bin/fieldextra.exe ./nl/nl_${DATE}/merge_${DATE}${step}.nl
         
         sleep 1
-
+        
+        # cat fields
         cat_fields $DATE $step $name 
 
         echo met added for ${DATE} at step ${step} h

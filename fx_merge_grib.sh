@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# Extract MACC aerosol fields with grb1-table nr. 206 (our own creation!) and ee=101-111
-# from int2lm-run on MACC files and attach them to "standard" IFS data processed through int2lm.
+#########SEVENTH SCRIPT OF WORKFLOW#########
+
+#########################################
+#     !!!run must start at 00 UTC!!!
+#########################################
 
 function create_nl {
     
@@ -61,8 +64,9 @@ end_nl
 }
 
 
-
 function mergeCAMS {
+
+    ### merge CAMS and IFS into fields-combined ###
 
     DATE=$1
     step=$2
@@ -70,13 +74,16 @@ function mergeCAMS {
     name_ifs=$4
     yy=$5
 	
+    # execute fx
     /scratch/juckerj/sandbox/bin/fieldextra.exe ./nl/nl_${DATE}/aer_${DATE}${step}.nl
 
+    # laf-case
     if [ ${name} = laf${DATE} ];
     then
         echo 'get KENDA_laf'
         cat /store/s83/owm/KENDA/ANA${yy}/det/laf${DATE}_combined ./fields_combined/fields_combined_${DATE}/aer_${DATE}_${step} > ./fields_combined/fields_combined_${DATE}/${name}
         
+    # normal case
     else
         echo 'get boundary files'
 	    cat ./IFS_out/IFS_out_${DATE}/${name_ifs} ./fields_combined/fields_combined_${DATE}/aer_${DATE}_${step} > ./fields_combined/fields_combined_${DATE}/${name_ifs}
@@ -84,16 +91,17 @@ function mergeCAMS {
     fi
 }
 
-
-# ****** run must start at 00 UTC *********
+############# START SCRIPT ##########
 
 period=$1
 
+# working directory
 inidir=/scratch/juckerj/sandbox/lm_ifs2lm_c2e_${period}
-cd ${inidir}
-echo move to ${inidir}
 
-# period1
+
+###########define periods###############
+
+# period1 (13.-20.2 2019)
 if [ $period = period1 ];
 then
     year=2019
@@ -102,7 +110,7 @@ then
     days=(13 14 15 16 17 18 19 20)
 fi
 
-# period2
+# period2 (23.-29.2 2019)
 if [ $period = period2 ];
 then
     year=2019
@@ -111,7 +119,7 @@ then
     days=(23 24 25 26 27 28 29)
 fi
 
-# period3
+# period3 (1.-7.12 2018)
 if [ $period = period3 ];
 then    
     year=2018
@@ -120,7 +128,7 @@ then
     days=(01 02 03 04 05 06 07)
 fi
 
-# period4
+# period4 (6.-13.6. 2018)
 if [ $period = period4 ];
 then    
     year=2018
@@ -129,24 +137,35 @@ then
     days=(06 07 08 09 10 11 12)
 fi
 
+####go to working directory####
+
+cd ${inidir}
+
+echo '####'move to ${inidir}'####'
+
+###### iterate over all days of period#####
 for day in ${days[@]};
 do
     DATE=${year}${month}${day}00
 
+    # loop over leadtime
     for step in `seq 0 3 80`; do
         day=`echo $step/24 | bc`
         hour=`echo $step-$day*24 | bc`
         d=`printf %02d $day`
         h=`printf %02d $hour`
         
+        # IFS-BC shifted +6 hours
         stepshift=`echo $step+6 | bc`
+        
         echo $stepshift
-        # shift time for ifs-boundary for 6h
+        
         dayshift=`echo $stepshift/24 | bc`
         hourshift=`echo $stepshift-$dayshift*24 | bc`
         dshift=`printf %02d $dayshift`
         hshift=`printf %02d $hourshift`
 
+        # step 0
         if [ $step -eq 0 ]; then
             
             create_nl $DATE $step laf$DATE 
@@ -155,6 +174,7 @@ do
             mergeCAMS $DATE $step laf$DATE dummy_name $yy
         fi
         
+        # normal case
         create_nl $DATE $step lbff${d}${h}0000
          sleep 5
         
@@ -165,7 +185,7 @@ do
 
     fxclone --reference_date=${DATE} --force -o laf${DATE}_SSO_STDH /scratch/juckerj/sandbox/met/laf2019070512
 
-
+    
     cat fields_combined/fields_combined_${DATE}/laf${DATE} laf${DATE}_SSO_STDH > fields_combined/fields_combined_${DATE}/laf${DATE}_tmp
 
 
