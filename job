@@ -1,0 +1,43 @@
+#!/bin/csh                                        
+#SBATCH --job-name=LM.ifs2lm                         
+#SBATCH --output=OUTPUT                         
+#SBATCH --error=stdeoJob_876.ifs2lm                          
+#SBATCH --partition=pp-short                                           
+#SBATCH --account=s83                                           
+#SBATCH --ntasks=6                                         
+#SBATCH --time=00:30:00                                            
+#                                                     
+# Initialization                                      
+unalias * ; unset noclobber
+echo Job is running on node $HOST
+# 
+# Namelist with nproc definition: /scratch/walser/tmp/17080100_H2C/lm_ifs2lm_wd_95777/INPUT
+#
+echo "lm_ifs2lm begins"
+
+source /cm/local/apps/environment-modules/3.2.10/Modules/init/csh
+module purge
+
+
+# set default environment 
+unsetenv LM_* NQS_*
+setenv MALLOC_MMAP_MAX_ 0 
+setenv MALLOC_TRIM_THRESHOLD_ 536870912 
+setenv MV2_USE_GPUDIRECT_GDRCOPY 0 
+
+setenv GRIB_DEFINITION_PATH /oprusers/owm/opr/resources/grib_api_definitions_cosmo:/oprusers/owm/opr/resources/grib_api_definitions_vendor
+setenv GRIB_SAMPLES_PATH /oprusers/owm/opr/resources/grib_api_samples
+
+# source  application/user environment
+source /oprusers/owm/opr/abs/int2lm.env
+
+# delete old YU files (required if job is requeued by scheduler)
+rm -f YU*
+
+unlimit
+srun -n 6 ./int2lm
+echo $status >! jobstatus
+
+echo "lm_ifs2lm ends"
+echo node status when job has finished
+exit 0
