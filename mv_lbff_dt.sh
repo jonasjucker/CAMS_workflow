@@ -5,8 +5,14 @@
 
 ########################################
 
-dt=$1
-leadtime=$2
+if [ "$#" -eq 2 ]; then
+    dt=$1
+    leadtime=$2
+else
+    echo Enter dt in h, enter leadtime in h!
+    exit
+fi
+
 
 for step in `seq 0 3 ${leadtime}`; do
     day=`echo $step/24 | bc`
