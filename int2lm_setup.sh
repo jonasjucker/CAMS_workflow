@@ -28,7 +28,7 @@ then
     days=(13 14 15 16 17 18 19 20)
 fi
 
-# period2 (23.-29.2 2019)
+# period2 (23.-29.6 2019)
 if [ $period = period2 ];
 then
     year=2019
