@@ -98,7 +98,7 @@ do
 
 
     ### copy BC #######
-    scp -v ${inidir}/fields_combined/fields_combined_${DATE}/lbff* daint:/scratch/snx3000/juckerj/wd/${yy}${mm}${dd}18_H2C/int2lm_out/.
+    scp -v ${inidir}/fields_combined/fields_combined_${DATE}/lbff* daint:/scratch/snx3000/juckerj/cache/${exp}/LBC_RING_intpl/coarse/${yy}${mm}${dd}18/.
 
 done
 
