@@ -17,5 +17,5 @@ The order of the scripts is the following:
 
 Additional scripts in the repository:
 
-job --> submission script for int2lm
-mv_lbff_dt.sh --> renames BC for experimetns outside of cosmo-package
+job: submission script for int2lm
+mv_lbff_dt.sh: renames BC for experiments outside of cosmo-package
