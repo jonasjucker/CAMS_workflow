@@ -1,5 +1,11 @@
 #!/bin/bash
 
+#SBATCH --job-name=fx_merge                 
+#SBATCH --output=OUTPUT                         
+#SBATCH --error=stdeoJob_876.ifs2lm                                            
+#SBATCH --account=s83 
+#SBATCH --time=01:00:00   
+
 #########SEVENTH SCRIPT OF WORKFLOW#########
 
 #########################################
@@ -149,7 +155,7 @@ do
     DATE=${year}${month}${day}00
 
     # loop over leadtime
-    for step in `seq 0 3 80`; do
+    for step in `seq 0 3 76`; do
         day=`echo $step/24 | bc`
         hour=`echo $step-$day*24 | bc`
         d=`printf %02d $day`
@@ -169,14 +175,12 @@ do
         if [ $step -eq 0 ]; then
             
             create_nl $DATE $step laf$DATE 
-            sleep 5
             
             mergeCAMS $DATE $step laf$DATE dummy_name $yy
         fi
         
         # normal case
         create_nl $DATE $step lbff${d}${h}0000
-         sleep 5
         
         mergeCAMS $DATE $step lbff${d}${h}0000 lbff${dshift}${hshift}0000 $yy
     done

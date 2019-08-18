@@ -205,12 +205,10 @@ do
         # create_nl for step
         create_nl $DATE $step $name $period
         
-        sleep 1
         
         # execute fx
         /scratch/juckerj/sandbox/bin/fieldextra.exe ./nl/nl_${DATE}/merge_${DATE}${step}.nl
         
-        sleep 1
         
         # cat fields
         cat_fields $DATE $step $name 

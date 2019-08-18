@@ -1,5 +1,11 @@
 #!/bin/bash
 
+#SBATCH --job-name=transfer_kesch                 
+#SBATCH --output=OUTPUT                         
+#SBATCH --error=stdeoJob_876.transfer_kesch                                            
+#SBATCH --account=s83 
+#SBATCH --time=03:00:00
+
 #########EIGTH SCRIPT OF WORKFLOW#########
 
 #########################################
@@ -7,7 +13,7 @@
 #########################################
 
 
-#######copy prepared data from kech back to daint#####
+#######copy prepared data from kesch back to daint#####
 
 if [ "$#" -eq 2 ]; then
     period=$1
