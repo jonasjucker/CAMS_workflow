@@ -1,5 +1,11 @@
 #!/bin/bash
 
+#SBATCH --job-name=transfer_kesch                 
+#SBATCH --output=OUTPUT                         
+#SBATCH --error=stdeoJob_876.transfer_daint
+#SBATCH --account=s83 
+#SBATCH --time=03:00:00
+
 #########SECOND SCRIPT OF WORKFLOW#########
 
 #########################################
@@ -54,6 +60,16 @@ then
     days=(06 07 08 09 10 11 12)
 fi
 
+# period5 (1.-30.4. 2019)
+if [ $period = period5 ];
+then    
+    year=2019
+    yy=19
+    month=04
+    days=(01 02 03 04 05 06 07 08 09 \
+          10 11 12 13 14 15 16 17 18 19 \
+          20 21 22 23 24 25 26 27 28 29 30)
+fi
 ####go to working directory####
 
 cd ${inidir}

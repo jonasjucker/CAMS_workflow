@@ -143,6 +143,16 @@ then
     days=(06 07 08 09 10 11 12)
 fi
 
+# period5 (1.-30.4. 2019)
+if [ $period = period5 ];
+then    
+    year=2019
+    yy=19
+    month=04
+    days=(01 02 03 04 05 06 07 08 09 \
+          10 11 12 13 14 15 16 17 18 19 \
+          20 21 22 23 24 25 26 27 28 29 30)
+fi
 ####go to working directory####
 
 cd ${inidir}
@@ -185,7 +195,7 @@ do
         mergeCAMS $DATE $step lbff${d}${h}0000 lbff${dshift}${hshift}0000 $yy
     done
 
-    echo 'merge done -> start adding sso_stdh'
+    echo 'merge done -> start adding RSMIN EMIS_RAD SST_STDH'
 
     fxclone --reference_date=${DATE} --force -o laf${DATE}_SSO_STDH /scratch/juckerj/sandbox/met/laf2019070512
 
@@ -196,5 +206,5 @@ do
     mv fields_combined/fields_combined_${DATE}/laf${DATE}_tmp fields_combined/fields_combined_${DATE}/laf${DATE}
 
     rm laf${DATE}_SSO_STDH
-    echo 'adding sso_stdh done '
+    echo 'adding of RSMIN EMIS_RAD SSO_STDH done '
 done
