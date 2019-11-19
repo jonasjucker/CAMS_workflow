@@ -2,9 +2,9 @@
 
 #SBATCH --job-name=fx_merge                 
 #SBATCH --output=OUTPUT                         
-#SBATCH --error=stdeoJob_876.ifs2lm                                            
+#SBATCH --error=stdeoJob_876.fx_merge                                            
 #SBATCH --account=s83 
-#SBATCH --time=01:00:00   
+#SBATCH --time=04:00:00   
 
 #########SEVENTH SCRIPT OF WORKFLOW#########
 
@@ -27,10 +27,10 @@ function create_nl {
         /
 
         &GlobalResource
-         dictionary            = "/users/bettems/projects_kesch/fieldextra/resources/dictionary_cosmo.txt",
-         grib_definition_path  = "/users/bettems/projects_kesch/fieldextra/resources/eccodes_definitions_cosmo",
-                                 "/users/bettems/projects_kesch/fieldextra/resources/eccodes_definitions_vendor"
-         grib2_sample          = "/users/bettems/projects_kesch/fieldextra/resources/eccodes_samples/COSMO_GRIB2_default.tmpl"
+         dictionary            = "/users/tsm/project_escha/fieldextra/v13_1_0/resources/dictionary_cosmo.txt",
+         grib_definition_path  = "/users/tsm/project_escha/fieldextra/v13_1_0/resources/eccodes_definitions_cosmo",
+                                 "/users/tsm/project_escha/fieldextra/v13_1_0/resources/eccodes_definitions_vendor"
+         grib2_sample          = "/users/tsm/project_escha/fieldextra/v13_1_0/resources/eccodes_samples/COSMO_GRIB2_default.tmpl"
         /
 
         &GlobalSettings
@@ -88,6 +88,8 @@ function mergeCAMS {
     then
         echo 'get KENDA_laf'
         cat /store/s83/owm/KENDA/ANA${yy}/det/laf${DATE}_combined ./fields_combined/fields_combined_${DATE}/aer_${DATE}_${step} > ./fields_combined/fields_combined_${DATE}/${name}
+        #echo 'get Cycle-laf'
+        #cat /store/s83/juckerj/EXP_TST/700/ANA/laf${DATE}_combined ./fields_combined/fields_combined_${DATE}/aer_${DATE}_${step} > ./fields_combined/fields_combined_${DATE}/${name}
         
     # normal case
     else
@@ -140,7 +142,8 @@ then
     year=2018
     yy=18
     month=06
-    days=(06 07 08 09 10 11 12)
+    days=(01 02 03 04 05 06 07 08 09 10 11 12 \
+            13 14 15)
 fi
 
 # period5 (1.-30.4. 2019)
@@ -149,6 +152,17 @@ then
     year=2019
     yy=19
     month=04
+    days=(01 02 03 04 05 06 07 08 09 10)
+#       10 11 12 13 14 15 16 17 18 19 \
+#          20 21 22 23 24 25 26 27 28 29 30)
+fi
+
+# period6 (1.-30-6-2019)
+if [ $period = period6 ];
+then    
+    year=2019
+    yy=19
+    month=06
     days=(01 02 03 04 05 06 07 08 09 \
           10 11 12 13 14 15 16 17 18 19 \
           20 21 22 23 24 25 26 27 28 29 30)

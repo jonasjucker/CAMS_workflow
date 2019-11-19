@@ -50,7 +50,8 @@ then
     year=2018
     yy=18
     month=06
-    days=(06 07 08 09 10 11 12)
+    days=(01 02 03 04 05 06 07 08 09 10 11 12 \
+            13 14 15)
 fi
 
 # period5 (1.-30.4. 2019)
@@ -59,6 +60,17 @@ then
     year=2019
     yy=19
     month=04
+    days=(01 02 03 04 05 06 07 08 09 \
+          10 11 12 13 14 15 16 17 18 19 \
+          20 21 22 23 24 25 26 27 28 29 30)
+fi
+
+# period6 (1.-30-6-2019)
+if [ $period = period6 ];
+then    
+    year=2019
+    yy=19
+    month=06
     days=(01 02 03 04 05 06 07 08 09 \
           10 11 12 13 14 15 16 17 18 19 \
           20 21 22 23 24 25 26 27 28 29 30)
@@ -74,8 +86,9 @@ echo '####'move to ${inidir}'####'
 for day in ${days[@]};
 do
     DATE=${year}${month}${day}00
+    echo ${DATE}
 
-    # enter specific day
+    # enter directory for specific day
     cd ${inidir}/${DATE}
     
     # rename due to other fienames from mars-retrieve
@@ -100,6 +113,7 @@ do
             fout=efff${d}${h}0000
         fi
 
-        grib_copy C3macc_*_${yy}-${mm}-${dd}-${hh}-${step}.grb $fout 
+        # use grib_copy
+        /oprusers/owm/modules/RH7.5/grib_api/1.20.0-noomp/gnu-5.4.0/bin/grib_copy C3macc_*_${yy}-${mm}-${dd}-${hh}-${step}.grb $fout 
     done
 done

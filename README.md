@@ -40,7 +40,7 @@ into one mixed grib file (CAMS-aerosols, dummy-met(grib1), dummy-met(grib2)).
 CAMS-nl_setup.sh:
 create int2lm-namelist for each day in period in a seperate working directory.
 
-int2lm_setup.sh
+int2lm_setup.sh:
 link int2lm executable, external parameters and other stuff needed for int2lm.
 submit int2lm on kesch
 
@@ -53,16 +53,16 @@ transfer_kesch.sh:
 Transfer the analysis and BC from Kesch back to daint into "cache"
 as required from the cosmo-package.
 
-Scripts not related to CAMS-workflow in this repo:
+Other scripts
 
 job:
-script to submitt int2lm on kesch manually
+script to submit int2lm on kesch (used as a template in int2lm_setup.sh)
 
 mv_lbff_dt.sh:
 shift name of BC for a certain dt and leadtime, as BC f rom IFS 
 are usually -6h from COSMO-run at MeteoSwiss. Used for sandbox experiments
+on Kesch. Cosmo-Package does this shift automatically.
 
 
 
 NOT IN THIS REPO:   SCRIPT FOR MARS-RETRIEVE AT ECMWF
-on Kesch. Cosmo-Package does this shift automatically.

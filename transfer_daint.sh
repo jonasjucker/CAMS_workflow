@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=transfer_kesch                 
+#SBATCH --job-name=transfer_daint                 
 #SBATCH --output=OUTPUT                         
 #SBATCH --error=stdeoJob_876.transfer_daint
 #SBATCH --account=s83 
@@ -57,7 +57,8 @@ then
     year=2018
     yy=18
     month=06
-    days=(06 07 08 09 10 11 12)
+    days=(01 02 03 04 05 06 07 08 09 10 11 12 \
+            13 14 15)
 fi
 
 # period5 (1.-30.4. 2019)
@@ -70,6 +71,16 @@ then
           10 11 12 13 14 15 16 17 18 19 \
           20 21 22 23 24 25 26 27 28 29 30)
 fi
+if [ $period = period6 ];
+then    
+    year=2019
+    yy=19
+    month=06
+    days=(01 02 03 04 05 06 07 08 09 \
+          10 11 12 13 14 15 16 17 18 19 \
+          20 21 22 23 24 25 26 27 28 29 30)
+fi
+
 ####go to working directory####
 
 cd ${inidir}
@@ -85,7 +96,11 @@ do
     # special case for period3 (1.12)
     if [ $day = 01 ];
     then
-        day=30
+        echo *****************CAUTION******************
+        echo special case for months following months 
+        echo with 31 days activ! For months with less 
+        echo days please change day in this if-condition.
+        day=31
         dd=`printf %02d $day`
         monthd=`echo $month-1 | bc`
         mm=`printf %02d $monthd`
@@ -97,6 +112,7 @@ do
         mm=`printf %02d $month`
     
     fi
+
     #### copy data from int2lm from daint ######
     scp -v daint:/scratch/snx3000/juckerj/wd/${yy}${mm}${dd}18_H2C/int2lm_out/* ${inidir}/IFS_out/IFS_out_${DATE}/.
 done

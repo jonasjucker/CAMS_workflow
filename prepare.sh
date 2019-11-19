@@ -50,7 +50,8 @@ then
     year=2018
     yy=18
     month=06
-    days=(06 07 08 09 10 11 12)
+    days=(01 02 03 04 05 06 07 08 09 10 11 12 \
+            13 14 15)
 fi
 
 # period5 (1.-30.4. 2019)
@@ -63,12 +64,24 @@ then
           10 11 12 13 14 15 16 17 18 19 \
           20 21 22 23 24 25 26 27 28 29 30)
 fi
+
+# period6 (1.-30-6-2019)
+if [ $period = period6 ];
+then    
+    year=2019
+    yy=19
+    month=06
+    days=(01 02 03 04 05 06 07 08 09 \
+          10 11 12 13 14 15 16 17 18 19 \
+          20 21 22 23 24 25 26 27 28 29 30)
+fi
 ###### iterate over all days of period#####
 
 for day in ${days[@]};
 do
     DATE=${year}${month}${day}00
 
+    # create all directories
     mkdir -p ${inidir}/IFS_in/IFS_in_${DATE}
     mkdir -p ${inidir}/IFS_out/IFS_out_${DATE}
 
@@ -84,6 +97,7 @@ do
     mkdir -p ${inidir}/met/met_${DATE}
     mkdir -p ${inidir}/met/met_${DATE}/tmp_grb
 
+    # copy dummy-meteorlogy
     cp /scratch/juckerj/sandbox/met/* ${inidir}/met/.
 done
 
