@@ -27,7 +27,7 @@ create all directories for the other scripts
 transfer_daint.sh:
 transfer the interpolated BC from IFS from daint to kesch
 
-unpack_CAMS_files.sh
+unpack_CAMS_files.sh:
 unpack all CAMS aerosol-fields from .tar and rename them.
 Use of software "grib-copy"
 
