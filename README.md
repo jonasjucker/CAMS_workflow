@@ -7,7 +7,7 @@ In case of problems or questions regarding the workflow please contact
 Jonas Jucker: joni.jucker@yahoo.de
 
 
-Overview
+--------------------------Overview-----------------------------
 
 Due to the long time needed for the MARS-retrieve from ECMWF, we only request the 11 aerosol-species
 from the CAMS model run.
@@ -19,18 +19,18 @@ The IFS grib files contain grib1 and grib2 fields in one single grib file, what 
 
 REMARK: The scripts were only tested for model runs starting at 00 UTC!
 
--------------Short description in order of execution-----------
+------------SHORT DESCRIPTION IN ORDER OF EXECUTION------------
 
--------------Mars-retrieve on ecaccess at ECMWF------------
+
+---------------Mars-retrieve on ecaccess at ECMWF--------------
 
 submit_periods.sh:
 submit get_CAMS_MCH.sh for defined number of days.
 
 get_CAMS_MCH.sh:
-mars-retrieve for 11 aerosols from CAMS-model
-packs data into .tar for faster transfer via scp to kesch
+mars-retrieve for 11 aerosols from CAMS-model. Packs data into .tar for faster transfer via scp to kesch
 
------------- On Kesch -----------------
+------------------------ On Kesch ----------------------------
 
 prepare.sh:
 create all directories for the other scripts
@@ -64,7 +64,7 @@ transfer_kesch.sh:
 Transfer the analysis and BC from Kesch back to daint into "cache"
 as required from the cosmo-package.
 
------------Other scripts-----------------
+------------------------Other scripts--------------------------
 
 job:
 script to submit int2lm on kesch (used as a template in int2lm_setup.sh)
