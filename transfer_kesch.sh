@@ -26,68 +26,9 @@ fi
 # working directory
 inidir=/scratch/juckerj/sandbox/lm_ifs2lm_c2e_${period}
 
+# set date-specific variables 
+get_dates_for_periods $period
 
-
-###########define periods###############
-
-# period1 (13.-20.2 2019)
-if [ $period = period1 ];
-then
-    year=2019
-    yy=19
-    month=02
-    days=(13 14 15 16 17 18 19 20)
-fi
-
-# period2 (23.-29.6 2019)
-if [ $period = period2 ];
-then
-    year=2019
-    yy=19
-    month=06
-    days=(23 24 25 26 27 28 29)
-fi
-
-# period3 (1.-7.12 2018)
-if [ $period = period3 ];
-then    
-    year=2018
-    yy=18
-    month=12
-    days=(01 02 03 04 05 06 07)
-fi
-
-# period4 (6.-13.6. 2018)
-if [ $period = period4 ];
-then    
-    year=2018
-    yy=18
-    month=06
-    days=(01 02 03 04 05 06 07 08 09 10 11 12 \
-            13 14 15)
-fi
-
-# period5 (1.-30.4. 2019)
-if [ $period = period5 ];
-then    
-    year=2019
-    yy=19
-    month=04
-    days=(01 02 03 04 05 06 07 08 09 10)
-          #10 11 12 13 14 15 16 17 18 19 \
-          #20 21 22 23 24 25 26 27 28 29 30)
-fi
-
-# period6 (1.-30-6-2019)
-if [ $period = period6 ];
-then    
-    year=2019
-    yy=19
-    month=06
-    days=(01 02 03 04 05 06 07 08 09 \
-          10 11 12 13 14 15 16 17 18 19 \
-          20 21 22 23 24 25 26 27 28 29 30)
-fi
 ####go to working directory####
 
 cd ${inidir}
@@ -120,7 +61,7 @@ do
     
     fi
     #### copy laf ######
-     scp -v ${inidir}/fields_combined/fields_combined_${DATE}/laf${DATE} daint:/scratch/snx3000/juckerj/cache/${exp}/LA_RING_assml/coarse/.
+    # scp -v ${inidir}/fields_combined/fields_combined_${DATE}/laf${DATE} daint:/scratch/snx3000/juckerj/cache/${exp}/LA_RING_assml/coarse/.
 
 
     ### copy BC #######

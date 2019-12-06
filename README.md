@@ -66,6 +66,9 @@ as required from the cosmo-package.
 
 ------------------------Other scripts--------------------------
 
+period_definitions:
+place to define the periods and the corresponding dates one wants to use for this workflow
+
 job:
 script to submit int2lm on kesch (used as a template in int2lm_setup.sh)
 
