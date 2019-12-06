@@ -1,4 +1,5 @@
 #!/bin/bash
+. ./period_definitions
 
 #########THIRD SCRIPT OF WORKFLOW#########
 

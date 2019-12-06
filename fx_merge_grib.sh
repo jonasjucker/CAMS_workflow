@@ -1,4 +1,5 @@
 #!/bin/bash
+. ./period_definitions
 
 #SBATCH --job-name=fx_merge                 
 #SBATCH --output=OUTPUT_fx_merge                         

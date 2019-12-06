@@ -1,4 +1,5 @@
 #!/bin/bash
+. ./period_definitions
 
 #SBATCH --job-name=transfer_kesch                 
 #SBATCH --output=OUTPUT                         

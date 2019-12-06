@@ -1,4 +1,5 @@
 #!/bin/bash
+. ./period_definitions
 
 #SBATCH --job-name=transfer_daint                 
 #SBATCH --output=OUTPUT                         

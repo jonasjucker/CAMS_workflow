@@ -1,4 +1,5 @@
 #!/bin/bash
+. ./period_definitions
 
 #SBATCH --job-name=fx_add_met                 
 #SBATCH --output=OUTPUT                         
